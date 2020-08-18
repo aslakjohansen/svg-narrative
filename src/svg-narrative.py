@@ -55,23 +55,24 @@ class Model:
         
         return result
 
-ids = {
-    'tickbox1': 'path819',
-    'tickbox2': 'path819-3',
-    'tickbox3': 'path819-6',
-    'tickbox2text': 'tspan846',
-    'tickbox2text': 'text848',
-    'tickbox3text': 'tspan850',
-    'box': 'path817',
-    'boxtext': 'flowPara860',
-}
+if __name__ == "__main__":
+    ids = {
+        'tickbox1': 'path819',
+        'tickbox2': 'path819-3',
+        'tickbox3': 'path819-6',
+        'tickbox2text': 'tspan846',
+        'tickbox2text': 'text848',
+        'tickbox3text': 'tspan850',
+        'box': 'path817',
+        'boxtext': 'flowPara860',
+    }
 
-m = Model("../var/test1.svg")
-m.check_ids(ids)
-m.hide(ids['tickbox1'])
-m.store("test1.svg")
-m.show([ids['tickbox1']])
-m.store("test2.svg")
-m.set_text(ids['tickbox2text'], "Red")
-m.set_text(ids['boxtext'], "Once upon a time in a land far far away ...")
-m.store("test3.svg")
+    m = Model("../var/test1.svg")
+    m.check_ids(ids)
+    m.hide(ids['tickbox1'])
+    m.store("test1.svg")
+    m.show([ids['tickbox1']])
+    m.store("test2.svg")
+    m.set_text(ids['tickbox2text'], "Red")
+    m.set_text(ids['boxtext'], "Once upon a time in a land far far away ...")
+    m.store("test3.svg")
