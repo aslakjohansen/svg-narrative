@@ -28,8 +28,6 @@ class Model:
             
             # write
             e.attrs['style'] = ';'.join(map(lambda k: '%s:%s'%(k, props[k]), props.keys()))
-            
-            print(e)
     
     def show (self, ids):
         pass
