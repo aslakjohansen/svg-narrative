@@ -30,20 +30,6 @@ class Model:
         for identifier in ids:
             e = self.root.find(id=identifier)
             set_display(e, 'none')
-            
-#            # read
-#            style = e.attrs['style'].split(';')
-#            props = {}
-#            for i in range(len(style)):
-#                elements = style[i].split(':')
-#                if len(elements)!=2: continue
-#                props[elements[0]] = elements[1]
-#            
-#            # modify
-#            props['display'] = 'none'
-#            
-#            # write
-#            e.attrs['style'] = ';'.join(map(lambda k: '%s:%s'%(k, props[k]), props.keys()))
     
     def show (self, ids):
         for identifier in ids:
