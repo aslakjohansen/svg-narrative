@@ -66,7 +66,7 @@ if __name__ == "__main__":
         'box': 'path817',
         'boxtext': 'flowPara860',
     }
-
+    
     m = Model("../var/test1.svg")
     m.check_ids(ids)
     m.hide(ids['tickbox1'])
