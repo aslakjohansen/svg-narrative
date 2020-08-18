@@ -27,11 +27,15 @@ class Model:
             fo.writelines(lines)
     
     def hide (self, ids):
+        if type(ids)==str:
+            ids = [ids]
         for identifier in ids:
             e = self.root.find(id=identifier)
             set_display(e, 'none')
     
     def show (self, ids):
+        if type(ids)==str:
+            ids = [ids]
         for identifier in ids:
             e = self.root.find(id=identifier)
             set_display(e, 'display')
@@ -51,7 +55,7 @@ ids = {
 }
 
 m = Model("../var/test1.svg")
-m.hide([ids['tickbox1']])
+m.hide(ids['tickbox1'])
 m.store("test1.svg")
 m.show([ids['tickbox1']])
 m.store("test2.svg")
