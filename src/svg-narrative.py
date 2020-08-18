@@ -40,22 +40,38 @@ class Model:
             e = self.root.find(id=identifier)
             set_display(e, 'display')
     
-    def settext (self, identifier):
-        pass
+    def set_text (self, identifier, text):
+        e = self.root.find(id=identifier)
+        e.string.replace_with(text)
+    
+    def check_ids (self, idmap, silent=False):
+        result = True
+        
+        for key in idmap:
+            value = idmap[key]
+            e = self.root.find(id=value)
+            if not silent: print('Value "%s" of key "%s"%s found'%(value, key, " not" if e==None else ""))
+            if key==None: result = False
+        
+        return result
 
 ids = {
     'tickbox1': 'path819',
     'tickbox2': 'path819-3',
     'tickbox3': 'path819-6',
-    'tickbox1text': 'text844',
+    'tickbox2text': 'tspan846',
     'tickbox2text': 'text848',
-    'tickbox3text': 'text852',
+    'tickbox3text': 'tspan850',
     'box': 'path817',
-    'boxtext': 'flowRoot854',
+    'boxtext': 'flowPara860',
 }
 
 m = Model("../var/test1.svg")
+m.check_ids(ids)
 m.hide(ids['tickbox1'])
 m.store("test1.svg")
 m.show([ids['tickbox1']])
 m.store("test2.svg")
+m.set_text(ids['tickbox2text'], "Red")
+m.set_text(ids['boxtext'], "Once upon a time in a land far far away ...")
+m.store("test3.svg")
