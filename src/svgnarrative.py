@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from copy import copy
 
 def set_style_attr (e, key, value):
     if not 'style' in e.attrs: e.attrs['style'] = ''
@@ -125,6 +126,23 @@ class Model:
         for identifier in ids:
             e = self.root.find(id=identifier)
             set_end_marker(e, marker)
+    
+    def insert (self, model, prefix, x, y):
+        # clone model
+        c = copy(model.root)
+        
+        # prefix all ids in clone
+        for tag in c.select('[id]'):
+            tag['id'] = prefix + tag['id']
+        
+        # insert group tag
+        g = self.root.new_tag('g', transform='translate(%s, %s)'%(str(x), str(y)))
+        self.root.svg.append(g)
+        
+        # insert tags
+        for child in c.svg.children:
+            if child.name=='g':
+                g.append(child)
 
 if __name__ == "__main__":
     ids = {
@@ -138,6 +156,8 @@ if __name__ == "__main__":
         'boxtext': 'flowPara860',
     }
     
+    t = Model("../var/thing.svg")
+    
     m = Model("../var/test1.svg")
     m.check_ids(ids)
     m.hide(ids['tickbox1'])
@@ -147,3 +167,8 @@ if __name__ == "__main__":
     m.set_text(ids['tickbox2text'], "Red")
     m.set_text(ids['boxtext'], "Once upon a time in a land far far away ...")
     m.store("test3.svg")
+    
+    for i in range(3):
+        m.insert(t, 'thing%d_' % i, 10*i, 15*i)
+    m.store("test4.svg")
+
