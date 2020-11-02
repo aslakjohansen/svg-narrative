@@ -80,6 +80,9 @@ class Model:
     
     def set_text (self, identifier, text):
         e = self.root.find(id=identifier)
+        if e==None:
+            print('Error: Unable to look up tag for id "%s" in set_text' % identifier)
+            return
         e.string.replace_with(text)
     
     def check_ids (self, idmap, silent=False):
