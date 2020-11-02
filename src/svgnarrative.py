@@ -127,7 +127,7 @@ class Model:
             e = self.root.find(id=identifier)
             set_end_marker(e, marker)
     
-    def insert (self, model, prefix, x, y):
+    def insert (self, model, prefix, x, y, scale=1.0):
         # clone model
         c = copy(model.root)
         
@@ -136,12 +136,12 @@ class Model:
             tag['id'] = prefix + tag['id']
         
         # insert group tag
-        g = self.root.new_tag('g', transform='translate(%s, %s)'%(str(x), str(y)))
+        g = self.root.new_tag('g', transform='translate(%s %s) scale(%s %s)'%(str(x), str(y), str(scale), str(scale)))
         self.root.svg.append(g)
         
         # insert tags
         for child in c.svg.children:
-            if child.name=='g':
+            if child.name in ['g', 'path']:
                 g.append(child)
 
 if __name__ == "__main__":
