@@ -45,6 +45,8 @@ def highlight (e, color):
         set_stroke_color(e, color)
     elif e.name=='rect':
         set_stroke_color(e, color)
+    elif e.name=='ellipse':
+        set_stroke_color(e, color)
     elif e.name=='text':
         set_fill_color(e, color)
     elif e.name=='g':
@@ -118,6 +120,9 @@ class Model:
             ids = [ids]
         for identifier in ids:
             e = self.root.find(id=identifier)
+            if e==None:
+                print('Error: Unable to look up identifier "%s"' % identifier)
+                return
             highlight(e, highlight_color)
     
     def lowlight (self, ids):
@@ -128,6 +133,9 @@ class Model:
             ids = [ids]
         for identifier in ids:
             e = self.root.find(id=identifier)
+            if e==None:
+                print('Error: Unable to look up identifier "%s"' % identifier)
+                return
             set_end_marker(e, marker)
     
     def insert (self, model, prefix, x, y, scale=1.0):
