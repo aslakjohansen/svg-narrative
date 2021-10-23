@@ -31,6 +31,36 @@ def set_stroke_color (e, color):
     else:
         print('Warning: Don\'t know how to set stroke color for tag type "%s"' % e.name)
 
+def set_stroke_miterlimit (e, miterlimit):
+    if e.name=='g':
+        for child in e.children:
+            if child!=None:
+                set_stroke_miterlimit(child, miterlimit)
+    elif e.name in ['path', 'rect', 'text', 'ellipse']:
+        set_style_attr(e, 'stroke-miterlimit', miterlimit)
+    else:
+        print('Warning: Don\'t know how to set stroke miterlimit for tag type "%s"' % e.name)
+
+def set_stroke_dasharray (e, dasharray):
+    if e.name=='g':
+        for child in e.children:
+            if child!=None:
+                set_stroke_dasharray(child, dasharray)
+    elif e.name in ['path', 'rect', 'text', 'ellipse']:
+        set_style_attr(e, 'stroke-dasharray', ', '.join(map(lambda e: str(e), dasharray)))
+    else:
+        print('Warning: Don\'t know how to set stroke dasharray for tag type "%s"' % e.name)
+
+def set_stroke_dashoffset (e, dashoffset):
+    if e.name=='g':
+        for child in e.children:
+            if child!=None:
+                set_stroke_dashoffset(child, dashoffset)
+    elif e.name in ['path', 'rect', 'text', 'ellipse']:
+        set_style_attr(e, 'stroke-dashoffset', str(dashoffset))
+    else:
+        print('Warning: Don\'t know how to set stroke dashoffset for tag type "%s"' % e.name)
+
 def set_end_marker (e, marker):
     set_style_attr(e, 'marker-end', marker)
 
@@ -108,12 +138,20 @@ class Model:
             e = self.root.find(id=identifier)
             set_fill_color(e, color)
     
-    def stroke (self, ids, color):
+    # TODO: Note that support for defaults is not implemented for preserve=False
+    def stroke (self, ids, color, miterlimit=None, dasharray=None, dashoffset=None, preserve=True):
         if type(ids)==str:
             ids = [ids]
         for identifier in ids:
             e = self.root.find(id=identifier)
             set_stroke_color(e, color)
+            if miterlimit!=None or not preserve:
+              set_stroke_miterlimit(e, miterlimit)
+            if dasharray!=None or not preserve:
+              set_stroke_dasharray(e, dasharray)
+            if dashoffset!=None or not preserve:
+              set_stroke_dashoffset(e, dashoffset)
+              
     
     def highlight (self, ids, highlight_color):
         if type(ids)==str:
