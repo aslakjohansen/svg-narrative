@@ -61,6 +61,9 @@ def set_stroke_dashoffset (e, dashoffset):
     else:
         print('Warning: Don\'t know how to set stroke dashoffset for tag type "%s"' % e.name)
 
+def set_start_marker (e, marker):
+    set_style_attr(e, 'marker-start', marker)
+
 def set_end_marker (e, marker):
     set_style_attr(e, 'marker-end', marker)
 
@@ -165,6 +168,16 @@ class Model:
     
     def lowlight (self, ids):
         pass
+    
+    def set_start_marker (self, ids, marker):
+        if type(ids)==str:
+            ids = [ids]
+        for identifier in ids:
+            e = self.root.find(id=identifier)
+            if e==None:
+                print('Error: Unable to look up identifier "%s"' % identifier)
+                return
+            set_start_marker(e, marker)
     
     def set_end_marker (self, ids, marker):
         if type(ids)==str:
