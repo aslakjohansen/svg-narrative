@@ -212,6 +212,16 @@ class Model:
                 return
             set_end_marker(e, marker)
     
+    def set_xlink_href (self, ids, value):
+        if type(ids)==str:
+            ids = [ids]
+        for identifier in ids:
+            e = self.root.find(id=identifier)
+            if e==None:
+                print('Error: Unable to look up identifier "%s"' % identifier)
+                return
+            set_attr(e, 'xlink:href', value)
+    
     def insert (self, model, prefix, x, y, scale=1.0):
         # clone model
         c = copy(model.root)
