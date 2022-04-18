@@ -21,6 +21,12 @@ def set_style_attr (e, key, value):
     # write
     e.attrs['style'] = ';'.join(map(lambda k: '%s:%s'%(k, props[k]), props.keys()))
 
+def set_attr (e, key, value):
+    e.attrs[key] = value
+
+def get_attr (e, key):
+    return e.attrs[key]
+
 def set_stroke_color (e, color):
     if e.name=='g':
         for child in e.children:
@@ -119,6 +125,23 @@ class Model:
             print('Error: Unable to look up tag for id "%s" in set_text' % identifier)
             return
         e.string.replace_with(text)
+    
+    def set_attr (self, ids, key, value):
+        if type(ids)==str:
+            ids = [ids]
+        for identifier in ids:
+            e = self.root.find(id=identifier)
+            if e==None:
+                print('Error: Unable to look up tag for id "%s" in set_attr' % identifier)
+                return
+            set_attr(e, key, value)
+    
+    def get_attr (self, identifier, key):
+        e = self.root.find(id=identifier)
+        if e==None:
+            print('Error: Unable to look up tag for id "%s" in get_attr' % identifier)
+            return
+        return get_attr(e, key)
     
     def check_ids (self, idmap, silent=False):
         result = True
