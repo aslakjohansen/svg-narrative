@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='svgnarrative',
-      version='0.0.2',
+      version='0.0.3',
       description='Creating narratives by performing sequences of operations on SVG files',
       url='https://github.com/aslakjohansen/svg-narrative',
       author='Aslak Johansen',
