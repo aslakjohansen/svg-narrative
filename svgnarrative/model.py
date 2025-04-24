@@ -76,6 +76,9 @@ def set_end_marker (e, marker):
 def set_fill_color (e, color):
     set_style_attr(e, 'fill', color)
 
+def set_fill_opacity (e, opacity):
+    set_style_attr(e, 'fill-opacity', opacity)
+
 def set_display (e, display):
     set_style_attr(e, 'display', display)
 
@@ -163,6 +166,13 @@ class Model:
         for identifier in ids:
             e = self.root.find(id=identifier)
             set_fill_color(e, color)
+    
+    def fill_opacity (self, ids, opacity):
+        if type(ids)==str:
+            ids = [ids]
+        for identifier in ids:
+            e = self.root.find(id=identifier)
+            set_fill_opacity(e, opacity)
     
     # TODO: Note that support for defaults is not implemented for preserve=False
     def stroke (self, ids, color, miterlimit=None, dasharray=None, dashoffset=None, preserve=True):
@@ -266,4 +276,3 @@ if __name__ == "__main__":
     for i in range(3):
         m.insert(t, 'thing%d_' % i, 10*i, 15*i)
     m.store("test4.svg")
-
